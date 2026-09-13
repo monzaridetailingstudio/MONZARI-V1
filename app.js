@@ -1,0 +1,39 @@
+const services = [
+  ['Tratamiento cerámico', 'Protección, profundidad y brillo por años.'], ['PPF Trompa', 'Protección invisible para zonas de alto impacto.'], ['PPF Completo', 'Blindaje integral de la pintura original.'], ['Preparación pre-venta M1', 'Recuperación estética esencial para vender mejor.'], ['Preparación pre-venta M2', 'Corrección profunda para máxima presentación.'], ['Limpieza de interior', 'Descontaminación y detalle de cada superficie.'], ['Restauración de ópticas', 'Claridad, seguridad y renovación visual.'], ['Pintura de llantas y calipers', 'Terminación a medida para un conjunto impecable.'], ['Otros servicios', 'Contanos tu idea y armamos una solución.']
+];
+const $ = (s, parent=document) => parent.querySelector(s);
+const modal = $('#modal');
+const showModal = html => { $('#modal-content').innerHTML = html; modal.showModal(); };
+const reservations = () => JSON.parse(localStorage.getItem('monzari-reservas') || '[]');
+const saveReservations = items => localStorage.setItem('monzari-reservas', JSON.stringify(items));
+
+$('#service-list').innerHTML = services.map(([name, desc], i) => `<article class="service"><span class="service-number">0${i + 1}</span><h3>${name}</h3><p>${desc}</p><button class="reserve-service" data-service="${name}" aria-label="Reservar ${name}">→</button></article>`).join('');
+$('#booking-service').innerHTML = '<option value="" disabled selected>Elegí un servicio</option>' + services.map(([name]) => `<option>${name}</option>`).join('');
+$('#booking-date').min = new Date().toISOString().split('T')[0];
+
+document.addEventListener('click', e => {
+  if (e.target.closest('.modal-close')) modal.close();
+  const service = e.target.closest('.reserve-service')?.dataset.service;
+  if (service) { $('#booking-service').value = service; $('#reservar').scrollIntoView(); }
+});
+$('.menu-toggle').addEventListener('click', () => { const menu = $('.mobile-menu'); const opened = menu.classList.toggle('open'); $('.menu-toggle').setAttribute('aria-expanded', opened); menu.setAttribute('aria-hidden', !opened); });
+$('.mobile-menu').addEventListener('click', e => { if (e.target.tagName === 'A') $('.mobile-menu').classList.remove('open'); });
+
+$('#booking-form').addEventListener('submit', e => {
+  e.preventDefault(); const data = Object.fromEntries(new FormData(e.currentTarget));
+  const item = { ...data, id: Date.now(), estado: 'A confirmar reserva', creado: new Date().toLocaleDateString('es-AR') };
+  saveReservations([...reservations(), item]); e.currentTarget.reset();
+  showModal(`<div class="modal-success"><p class="eyebrow">SOLICITUD RECIBIDA</p><h2>Genial, reservaste<br/>tu turno.</h2><p>Ahora confirmalo realizando la reserva mencionada por el equipo. Dentro de las próximas <b>24 horas</b> tu turno será confirmado.</p><p><b>Fecha solicitada:</b> ${item.fecha.split('-').reverse().join('/')}</p><button class="button button-dark modal-close">Entendido <span>→</span></button></div>`);
+});
+
+const customers = () => JSON.parse(localStorage.getItem('monzari-clientes') || '[{"email":"cliente@monzari.com","password":"monzari","name":"Cliente Monzari","car":"BMW M3 · 2024","docs":["Informe de tratamiento cerámico.pdf","Plan de mantenimiento.pdf"]}]');
+const saveCustomers = items => localStorage.setItem('monzari-clientes', JSON.stringify(items));
+function clubLogin(email, password) { const user = customers().find(x => x.email.toLowerCase() === email.toLowerCase() && x.password === password); if (!user) return alert('No encontramos ese acceso. Si sos cliente, pedile tus credenciales al equipo Monzari.'); renderClub(user); }
+function renderClub(user) { $('#club-auth').hidden = true; const dash = $('#club-dashboard'); dash.hidden = false; dash.innerHTML = `<div class="dashboard-top"><div><p class="eyebrow">MONZARI CLUB</p><h4>Hola, ${user.name.split(' ')[0]}.</h4></div><button class="logout">Salir</button></div><p>${user.car}</p><div class="pdf-card"><div class="pdf-icon">▱</div><div><b>Documentos de tu vehículo</b><p>${user.docs.length} archivo(s) disponible(s)</p></div></div><div class="admin-list">${user.docs.map(d => `<div><span>${d}</span><span>PDF ↗</span></div>`).join('')}</div>`; $('.logout', dash).onclick = () => { dash.hidden = true; $('#club-auth').hidden = false; }; }
+$('#login-form').addEventListener('submit', e => { e.preventDefault(); const d = Object.fromEntries(new FormData(e.currentTarget)); clubLogin(d.email, d.password); });
+$('#google-demo').onclick = () => clubLogin('cliente@monzari.com', 'monzari');
+
+function admin() { const list = reservations(); const clients = customers(); showModal(`<div><p class="eyebrow">MONZARI / PANEL PRIVADO</p><h2 style="font:600 2rem 'Playfair Display';margin:0">Administración</h2><div class="admin-tabs"><button data-tab="turnos">Turnos (${list.length})</button><button data-tab="club">Club (${clients.length})</button></div><section id="admin-area"></section></div>`); const area = $('#admin-area'); const renderTurns = () => area.innerHTML = `<p style="font-size:.7rem">Gestioná solicitudes, disponibilidad y el estado de cada vehículo.</p><div class="admin-list">${list.length ? list.map(x => `<div><span><b>${x.nombre} ${x.apellido}</b><br>${x.servicio} · ${x.fecha} · ${x.marca} ${x.modelo}</span><select class="admin-state" data-id="${x.id}"><option ${x.estado==='A confirmar reserva'?'selected':''}>A confirmar reserva</option><option ${x.estado==='Reservado'?'selected':''}>Reservado</option><option ${x.estado==='En proceso'?'selected':''}>En proceso</option><option ${x.estado==='Entregado'?'selected':''}>Entregado</option></select></div>`).join('') : '<p>No hay solicitudes todavía.</p>'}</div>`; const renderClubAdmin = () => area.innerHTML = `<form id="new-client" class="admin-grid"><label>Nombre<input required name="name" placeholder="Nombre del cliente"></label><label>Vehículo<input required name="car" placeholder="Marca y modelo"></label><label>Email<input required type="email" name="email" placeholder="cliente@email.com"></label><label>Contraseña<input required name="password" placeholder="Acceso inicial"></label><button class="button button-dark">Crear acceso Club <span>→</span></button></form><div class="admin-list">${clients.map(x => `<div><span><b>${x.name}</b><br>${x.email} · ${x.car}</span><span class="status">${x.docs.length} PDFs</span></div>`).join('')}</div>`; renderTurns(); document.querySelectorAll('.admin-tabs button').forEach(b => b.onclick = () => b.dataset.tab === 'club' ? renderClubAdmin() : renderTurns()); area.addEventListener('change', e => { if (!e.target.matches('.admin-state')) return; const items = reservations(); const item = items.find(x => String(x.id) === e.target.dataset.id); item.estado = e.target.value; saveReservations(items); }); area.addEventListener('submit', e => { if (e.target.id !== 'new-client') return; e.preventDefault(); const client = {...Object.fromEntries(new FormData(e.target)), docs: ['Ficha de ingreso.pdf']}; saveCustomers([...customers(), client]); admin(); }); }
+$('#admin-trigger').addEventListener('click', () => showModal(`<div><p class="eyebrow">ACCESO RESTRINGIDO</p><h2 style="font:600 2rem 'Playfair Display';margin:0 0 20px">Panel Monzari</h2><form id="admin-login"><label>Email autorizado<input required type="email" name="email" placeholder="admin@monzari.com"></label><label>Contraseña<input required type="password" name="password" placeholder="••••••••"></label><button class="button button-dark">Ingresar <span>→</span></button><p style="font-size:.6rem;line-height:1.6">Demo: admin@monzari.com / monzari</p></form></div>`));
+document.addEventListener('submit', e => { if (e.target.id !== 'admin-login') return; e.preventDefault(); const d = Object.fromEntries(new FormData(e.target)); if (d.email === 'admin@monzari.com' && d.password === 'monzari') admin(); else alert('Credenciales inválidas.'); });
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
