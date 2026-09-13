@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b0b0b" />
+    <meta name="description" content="Monzari Detail — detailing automotor de alta precisión." />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Monzari Detail — Precisión en cada reflejo</title>
+  </head>
+  <body>
+    <div class="grain"></div>
+    <header class="site-header">
+      <a class="brand" href="#inicio" aria-label="Monzari Detail, inicio"><span>MONZARI</span><small>DETAIL STUDIO</small></a>
+      <nav class="desktop-nav" aria-label="Navegación principal">
+        <a href="#inicio">Inicio</a><a href="#servicios">Servicios</a><a href="#historia">Historia</a><a href="#club">Monzari Club</a>
+      </nav>
+      <a class="header-cta" href="#reservar">Reservar <span>↗</span></a>
+      <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false"><i></i><i></i><i></i></button>
+    </header>
+    <aside class="mobile-menu" aria-hidden="true"><a href="#inicio">Inicio</a><a href="#servicios">Servicios</a><a href="#historia">Historia</a><a href="#club">Monzari Club</a><a href="#reservar">Reservar turno</a></aside>
+
+    <main>
+      <section id="inicio" class="hero section">
+        <div class="hero-bg"></div><div class="hero-shade"></div>
+        <div class="hero-content"><p class="eyebrow light">Buenos Aires · Argentina <b></b> Est. 2025</p><h1>La obsesión<br />vive en <em>el detalle.</em></h1><p class="hero-copy">Cuidado automotor de alta precisión para vehículos que merecen ser inolvidables.</p><div class="hero-actions"><a href="#reservar" class="button button-light">Reservar un turno <span>→</span></a><a href="#servicios" class="text-link light">Descubrir servicios <span>↓</span></a></div></div>
+        <div class="hero-bottom"><span>SCROLL TO EXPLORE</span><div class="scroll-line"></div><span>34° 36' S · 58° 22' W</span></div>
+      </section>
+
+      <section class="intro section-pad"><p class="eyebrow">MONZARI DETAIL STUDIO</p><div class="intro-grid"><h2>Convertimos el cuidado<br />en <em>una experiencia.</em></h2><div><p>Un estudio dedicado a restaurar, proteger y elevar cada superficie. Sin atajos. Sin fórmulas genéricas.</p><a class="text-link" href="#historia">Conocé nuestra historia <span>→</span></a></div></div><div class="marquee"><span>PRECISIÓN</span><i>✦</i><span>PROTECCIÓN</span><i>✦</i><span>EXCELENCIA</span><i>✦</i><span>PRECISIÓN</span></div></section>
+
+      <section id="servicios" class="services section-pad"><div class="section-heading"><div><p class="eyebrow">01 / SERVICIOS</p><h2>Hecho para<br /><em>perdurar.</em></h2></div><p>Elegimos cada proceso, producto y terminación para revelar el máximo potencial de tu vehículo.</p></div><div id="service-list" class="service-list"></div><div class="services-foot"><p>¿Buscás algo específico?</p><a href="#reservar" class="button button-dark">Consultanos tu proyecto <span>↗</span></a></div></section>
+
+      <section class="statement section"><div class="statement-image"></div><div class="statement-content"><p class="eyebrow light">NUESTRA FILOSOFÍA</p><blockquote>“El lujo no siempre hace ruido.<br />A veces, <em>simplemente brilla.</em>”</blockquote><p>La diferencia está en lo que nadie ve. Por eso, nosotros sí lo vemos.</p></div></section>
+
+      <section id="reservar" class="booking section-pad"><div class="booking-heading"><p class="eyebrow">02 / TURNOS</p><h2>Tu próximo<br /><em>nivel comienza acá.</em></h2><p>Coordiná primero con nuestro equipo el servicio, valor y tiempo estimado. Luego completá tu solicitud de reserva.</p></div><form id="booking-form" class="booking-form"><div class="form-step"><span>01</span><h3>Tus datos</h3></div><div class="fields two"><label>Nombre<input required name="nombre" placeholder="Tu nombre" /></label><label>Apellido<input required name="apellido" placeholder="Tu apellido" /></label><label>DNI<input required name="dni" inputmode="numeric" placeholder="00.000.000" /></label><label>Teléfono<input required name="telefono" type="tel" placeholder="+54 9 ..." /></label></div><div class="form-step"><span>02</span><h3>Tu vehículo</h3></div><div class="fields three"><label>Vehículo<input required name="vehiculo" placeholder="Ej. Auto / SUV" /></label><label>Marca<input required name="marca" placeholder="Ej. BMW" /></label><label>Modelo<input required name="modelo" placeholder="Ej. M3" /></label><label>Año<input required name="anio" type="number" min="1900" max="2030" placeholder="2024" /></label><label>Color<input required name="color" placeholder="Ej. Negro" /></label><label>Patente<input required name="patente" placeholder="AA 123 BB" /></label></div><div class="form-step"><span>03</span><h3>Servicio y fecha</h3></div><div class="fields two"><label>Servicio<select required name="servicio" id="booking-service"></select></label><label>Fecha preferida<input required name="fecha" type="date" id="booking-date" /></label></div><label class="full-label">Contanos brevemente sobre tu proyecto <textarea name="notas" placeholder="Opcional"></textarea></label><button class="button button-dark form-submit" type="submit">Solicitar reserva <span>→</span></button><p class="form-note">Al enviar, tu turno quedará <b>pendiente de confirmación</b> hasta acreditar la reserva indicada por el equipo.</p></form></section>
+
+      <section id="historia" class="history section-pad"><div class="history-intro"><p class="eyebrow">03 / NUESTRA HISTORIA</p><h2>De un Passat<br />con miedo, a un sueño<br /><em>con nombre propio.</em></h2></div><div class="history-story"><article><span>EL COMIENZO</span><h3>Todo comenzó a los 14 años.</h3><p>El primer auto que detallé en serio fue un Volkswagen Passat CC VR6 2011 de mi tío Ariel. Ese día sentí miedo, ansiedad... y una chispa que encendió algo que nunca más se apagó.</p><p>Ariel fue quien me metió en este mundo. Me mostró las máquinas, los pads y los productos. Con su guía —y muchas horas de práctica— empecé a entender lo que significaba realmente el detailing.</p></article><article><span>APRENDER HACIENDO</span><h3>Los fines de semana eran mi laboratorio.</h3><p>Practicaba cada sábado y domingo, sin cobrar, solo por el deseo de aprender. Al año llegaron los primeros trabajos pagos. Invertí todo en herramientas, luces, máquinas y productos.</p><p>Mi papá, Jorge, fue parte fundamental de este proyecto. Su apoyo fue silencioso, pero gigante.</p></article><article><span>MONZARI HOY</span><h3>Esto no es un trabajo. Es una forma de vida.</h3><p>En 2025 sentí que era hora de volver, con todo lo aprendido y otro estándar. Así nació Monzari: una marca que representa experiencia, obsesión y una búsqueda constante de excelencia.</p><p>Cada vehículo es único. No creemos en fórmulas mágicas: creemos en escuchar al cliente y lograr el mejor acabado posible, con criterio y pasión.</p></article></div></section>
+
+      <section id="club" class="club section"><div class="club-visual"><div><p class="eyebrow light">MONZARI CLUB</p><h2>Tu auto.<br /><em>Su historia.</em></h2></div><p>Un espacio privado para seguir el cuidado de tu vehículo, siempre.</p></div><div class="club-panel"><div id="club-auth"><p class="eyebrow">ACCESO CLIENTES</p><h3>Bienvenido<br />al <em>Club.</em></h3><p>Ingresá para consultar el historial de servicios y documentos de tu vehículo.</p><form id="login-form"><label>Email<input required type="email" name="email" placeholder="tu@email.com" /></label><label>Contraseña<input required type="password" name="password" placeholder="••••••••" /></label><button class="button button-dark" type="submit">Ingresar <span>→</span></button></form><button class="google-button" id="google-demo">G <span>Continuar con Google</span></button><p class="club-help">¿Primera vez? Tu acceso es creado por nuestro equipo.</p></div><div id="club-dashboard" hidden></div></div></section>
+    </main>
+    <footer><a class="brand" href="#inicio"><span>MONZARI</span><small>DETAIL STUDIO</small></a><div><p>DETALLING AUTOMOTOR DE ALTA PRECISIÓN</p><a href="#reservar">Reservar un turno ↗</a></div><div><p>SEGUINOS</p><a href="https://instagram.com" target="_blank" rel="noreferrer">Instagram ↗</a></div><button id="admin-trigger" aria-label="Acceso administración">© 2025 MONZARI</button></footer>
+    <dialog id="modal"><div id="modal-content"></div><button class="modal-close" aria-label="Cerrar">×</button></dialog>
+    <script src="app.js"></script>
+  </body>
+</html>
